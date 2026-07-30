@@ -168,7 +168,8 @@ Please note that we will not be responsible for any cheques not issued as above
     expect(model.itemDetails, isNotNull);
     expect(model.itemDetails!.length, equals(1));
     expect(model.itemDetails!.first.description, contains('Rent for the month of 01/07/2026 to 31/07/2026'));
-    expect(model.itemDetails!.first.itemAmount, equals(1200000.0));
+    expect(model.itemDetails!.first.itemAmount, equals(1392000.0));
+    expect(model.itemDetails!.first.taxCode, equals(1));
     expect(model.itemDetails!.first.quantity, equals(1.0));
   });
 }

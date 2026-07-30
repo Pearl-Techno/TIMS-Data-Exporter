@@ -3070,13 +3070,18 @@ class FileGenerator {
       }
 
       if (netAmount > 0) {
+        final double inclusiveAmount = (totalMatch != null)
+            ? (double.tryParse(totalMatch.group(1)!.replaceAll(',', '')) ??
+                (netAmount * 1.16))
+            : (netAmount * 1.16);
+
         itemDetails.add(ItemDetail(
           id: itemDetails.length + 1,
           trId: id,
           description: description,
           quantity: qty,
-          unitPrice: netAmount,
-          itemAmount: netAmount,
+          unitPrice: inclusiveAmount,
+          itemAmount: inclusiveAmount,
           taxCode: 1,
         ));
       }
