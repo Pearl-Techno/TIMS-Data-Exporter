@@ -3033,21 +3033,43 @@ class FileGenerator {
 
     if (isTemplateJ) {
       final String cleaned = text.replaceAll('D6', '6');
-      final descMatch = RegExp(
-              r'(Rent for the period of [\d/]+-[\d/]+)\s+(\d+)',
-              caseSensitive: false)
-          .firstMatch(cleaned);
       final totalMatch = RegExp(
               r'([\d,]+\.\d{2})\s+([\d,]+\.\d{2})\s+Total\s*VAT\s*Grand\s*Total[\s\S]*?([\d,]+\.\d{2})',
               caseSensitive: false)
           .firstMatch(cleaned);
 
-      if (descMatch != null && totalMatch != null) {
-        final description = descMatch.group(1)!.trim();
-        final qty = double.tryParse(descMatch.group(2)!) ?? 1.0;
-        final netAmount =
+      double netAmount = 0.0;
+      if (totalMatch != null) {
+        netAmount =
             double.tryParse(totalMatch.group(3)!.replaceAll(',', '')) ?? 0.0;
+      } else {
+        final subtotalMatch = RegExp(
+                r'Total\s*[\r\n\s]*([\d,]+\.\d{2})',
+                caseSensitive: false)
+            .firstMatch(cleaned);
+        if (subtotalMatch != null) {
+          netAmount =
+              double.tryParse(subtotalMatch.group(1)!.replaceAll(',', '')) ??
+                  0.0;
+        }
+      }
 
+      String description = 'Rent';
+      double qty = 1.0;
+
+      final matches = RegExp(
+              r'(Rent for (?:the (?:month|period) of )?[^\r\n]+)',
+              caseSensitive: false)
+          .allMatches(cleaned)
+          .toList();
+
+      if (matches.isNotEmpty) {
+        matches.sort((a, b) => b.group(1)!.length.compareTo(a.group(1)!.length));
+        description =
+            matches.first.group(1)!.replaceAll(RegExp(r'\s+'), ' ').trim();
+      }
+
+      if (netAmount > 0) {
         itemDetails.add(ItemDetail(
           id: itemDetails.length + 1,
           trId: id,
