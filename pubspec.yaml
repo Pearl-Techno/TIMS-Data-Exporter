@@ -1,0 +1,46 @@
+name: tims_data_exporter
+description: "A new Flutter project."
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: ^3.6.0
+
+dependencies:
+  csv: ^8.0.0
+  excel: ^4.0.6
+  file_picker: ^11.0.2
+  fl_chart: ^1.1.1
+  flutter:
+    sdk: flutter
+  iconsax: ^0.0.8
+  image: ^4.3.0
+  intl: ^0.20.2
+  open_file: ^4.0.0
+  path: ^1.9.1
+  path_provider: ^2.1.5
+  qr: ^4.0.0
+  shared_preferences: ^2.5.5
+  sqflite: ^2.4.1
+  sqflite_common_ffi: ^2.3.4+4
+  syncfusion_flutter_pdf: ^33.2.13
+  url_launcher: ^6.3.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  msix: ^3.16.13
+
+flutter:
+  uses-material-design: true
+
+msix_config:
+  display_name: "TIM's Data Exporter"
+  publisher_display_name: "Quantyx Labs"
+  identity_name: "tim.dataexporter"
+  msix_version: 0.1.0.0
+  capabilities: "internetClient"
+  output_path: "build/msix"
+  store: false
+  publisher: "CN=Quantyx Labs, O=Quantyx Labs, L=Nairobi, S=Nairobi, C=Kenya"

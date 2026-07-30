@@ -1,0 +1,1 @@
+Patch applied: added Sleek parsing and wrapper to skip generic parsing when Sleek items found.
